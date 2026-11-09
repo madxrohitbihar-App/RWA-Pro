@@ -22,7 +22,145 @@
             overflow: hidden;
         }
 
-        /* App Container */
+        /* ----------------------------------
+           SPLASH SCREEN STYLES
+        ---------------------------------- */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            color: #ffffff;
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s ease;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .splash-screen.fade-out {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .splash-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 24px;
+            animation: splashPop 0.8s ease-out forwards;
+        }
+
+        @keyframes splashPop {
+            0% {
+                opacity: 0;
+                transform: scale(0.9) translateY(15px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .splash-logo-wrapper {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .splash-logo {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            object-fit: contain;
+            background: #ffffff;
+            padding: 6px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(14, 165, 233, 0.3);
+            animation: pulseGlow 2.5s infinite ease-in-out;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(14, 165, 233, 0.2);
+            }
+            50% {
+                box-shadow: 0 10px 35px rgba(0, 0, 0, 0.4), 0 0 30px rgba(14, 165, 233, 0.6);
+            }
+        }
+
+        .splash-title-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .splash-title {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .splash-verified {
+            width: 20px;
+            height: 20px;
+            background: #0ea5e9;
+            color: #ffffff;
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 900;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(14, 165, 233, 0.4);
+        }
+
+        .splash-subtext {
+            font-size: 13px;
+            font-weight: 600;
+            color: #94a3b8;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            margin-bottom: 32px;
+        }
+
+        /* Modern Loader */
+        .splash-loader-container {
+            width: 160px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .splash-loader-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #38bdf8, #0ea5e9);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.8);
+            animation: loadProgress 2.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+        }
+
+        @keyframes loadProgress {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+
+        /* ----------------------------------
+           MAIN APPLICATION STYLES
+        ---------------------------------- */
         .app-container {
             display: flex;
             flex-direction: column;
@@ -134,6 +272,24 @@
 </head>
 <body>
 
+    <!-- Splash Screen Component -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-content">
+            <div class="splash-logo-wrapper">
+                <img class="splash-logo" src="https://i.postimg.cc/fTfdSHbT/image-search-1783668281136.png" alt="Rojgar With Ankit Logo">
+            </div>
+            <div class="splash-title-group">
+                <h1 class="splash-title">ROJGAR WITH ANKIT</h1>
+                <span class="splash-verified">✓</span>
+            </div>
+            <p class="splash-subtext">Developer By MedxrohitBihar</p>
+            <div class="splash-loader-container">
+                <div class="splash-loader-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application Structure -->
     <div class="app-container">
         <!-- Top Custom Header -->
         <header class="top-header" id="mainHeader">
@@ -155,29 +311,37 @@
 
         <!-- Main Website Area -->
         <div class="iframe-container">
-            <iframe id="appFrame" src="https://ais-pre-puxho4o57upkknekv3mgg7-49225910278.asia-east1.run.app/" allowfullscreen></iframe>
+            <iframe id="appFrame" src="https://rojgarwithankitt.vercel.app" allowfullscreen></iframe>
         </div>
     </div>
 
     <script>
-        // Auto hide/show header script
+        // Splash Screen Hide Handler
         window.addEventListener('load', function() {
+            const splashScreen = document.getElementById('splashScreen');
             const iframe = document.getElementById('appFrame');
             const header = document.getElementById('mainHeader');
 
+            // Hide splash screen after loading animation finishes (2.6s total time for smooth experience)
+            setTimeout(function() {
+                splashScreen.classList.add('fade-out');
+            }, 2600);
+
+            // Header Auto Hide / Show logic on specific URLs inside iframe
             try {
                 iframe.addEventListener('load', function() {
-                    const iframeWin = iframe.contentWindow;
-                    
                     setInterval(function() {
                         try {
+                            const iframeWin = iframe.contentWindow;
                             const currentUrl = iframeWin.location.href.toLowerCase();
                             if (currentUrl.includes('play') || currentUrl.includes('video') || currentUrl.includes('watch') || currentUrl.includes('class') || currentUrl.includes('player')) {
                                 header.classList.add('hidden-header');
                             } else {
                                 header.classList.remove('hidden-header');
                             }
-                        } catch (e) {}
+                        } catch (e) {
+                            // Catch cross-origin security restrictions if navigated away
+                        }
                     }, 500);
                 });
             } catch (e) {}
