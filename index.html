@@ -1,352 +1,801 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROJGAR WITH ANKIT</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-        body, html {
-            width: 100%;
-            height: 100%;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #f8fafc;
-            overflow: hidden;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROJGAR WITH ANKIT</title>
 
-        /* ----------------------------------
-           SPLASH SCREEN STYLES
-        ---------------------------------- */
-        .splash-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            color: #ffffff;
-            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s ease;
-            opacity: 1;
-            visibility: visible;
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-        .splash-screen.fade-out {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
 
-        .splash-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 24px;
-            animation: splashPop 0.8s ease-out forwards;
-        }
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #0b0611;
+}
 
-        @keyframes splashPop {
-            0% {
-                opacity: 0;
-                transform: scale(0.9) translateY(15px);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
+/* SPLASH SCREEN */
 
-        .splash-logo-wrapper {
-            position: relative;
-            margin-bottom: 24px;
-        }
+.splash-screen {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 50% 40%, #251139, transparent 55%),
+                linear-gradient(145deg,#090510,#10091a,#0b0611);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    color: white;
+    transition: opacity .6s ease, visibility .6s ease;
+}
 
-        .splash-logo {
-            width: 96px;
-            height: 96px;
-            border-radius: 50%;
-            object-fit: contain;
-            background: #ffffff;
-            padding: 6px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(14, 165, 233, 0.3);
-            animation: pulseGlow 2.5s infinite ease-in-out;
-        }
+.splash-screen.fade-out {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
 
-        @keyframes pulseGlow {
-            0%, 100% {
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(14, 165, 233, 0.2);
-            }
-            50% {
-                box-shadow: 0 10px 35px rgba(0, 0, 0, 0.4), 0 0 30px rgba(14, 165, 233, 0.6);
-            }
-        }
+.splash-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 24px;
+    animation: splashPop .8s ease-out;
+}
 
-        .splash-title-group {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
+@keyframes splashPop {
+    from {opacity:0;transform:translateY(18px) scale(.92);}
+    to {opacity:1;transform:translateY(0) scale(1);}
+}
 
-        .splash-title {
-            font-size: 24px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            color: #ffffff;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
+.splash-logo {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    border-radius: 50%;
+    background: white;
+    padding: 6px;
+    margin-bottom: 25px;
+    box-shadow: 0 0 25px rgba(168,85,247,.4);
+    animation: logoGlow 2s infinite;
+}
 
-        .splash-verified {
-            width: 20px;
-            height: 20px;
-            background: #0ea5e9;
-            color: #ffffff;
-            border-radius: 50%;
-            font-size: 11px;
-            font-weight: 900;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(14, 165, 233, 0.4);
-        }
+@keyframes logoGlow {
+    50% {box-shadow:0 0 45px rgba(168,85,247,.7);}
+}
 
-        .splash-subtext {
-            font-size: 13px;
-            font-weight: 600;
-            color: #94a3b8;
-            letter-spacing: 0.8px;
-            text-transform: uppercase;
-            margin-bottom: 32px;
-        }
+.splash-title-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 9px;
+}
 
-        /* Modern Loader */
-        .splash-loader-container {
-            width: 160px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-        }
+.splash-title {
+    font-size: 23px;
+    font-weight: 900;
+    color: white;
+}
 
-        .splash-loader-bar {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, #38bdf8, #0ea5e9);
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(56, 189, 248, 0.8);
-            animation: loadProgress 2.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
-        }
+.splash-verified {
+    width: 19px;
+    height: 19px;
+    background: linear-gradient(135deg,#a855f7,#6366f1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+}
 
-        @keyframes loadProgress {
-            0% { width: 0%; }
-            50% { width: 70%; }
-            100% { width: 100%; }
-        }
+.splash-subtext {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #bba4d5;
+    margin-bottom: 35px;
+    text-transform: uppercase;
+}
 
-        /* ----------------------------------
-           MAIN APPLICATION STYLES
-        ---------------------------------- */
-        .app-container {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            height: 100vh;
-            position: relative;
-            background-color: #f8fafc;
-        }
+.splash-loader-container {
+    width: 165px;
+    height: 4px;
+    background: rgba(255,255,255,.12);
+    border-radius: 20px;
+    overflow: hidden;
+}
 
-        /* Top Custom Header - White Theme */
-        .top-header {
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            background: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            flex-shrink: 0;
-            transition: transform 0.3s ease, opacity 0.3s ease, height 0.3s ease;
-        }
-        .top-header.hidden-header {
-            transform: translateY(-100%);
-            opacity: 0;
-            pointer-events: none;
-            height: 0;
-            border: none;
-            overflow: hidden;
-        }
-        .header-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 8px 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .cw-brand-badge {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            padding: 4px 14px 4px 6px;
-            border-radius: 30px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-        }
-        .cw-header-logo {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            object-fit: contain;
-        }
-        .brand-text-group {
-            display: flex;
-            flex-direction: column;
-        }
-        .cw-title-row {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .cw-title {
-            font-size: 14px;
-            font-weight: 800;
-            color: #0f172a;
-        }
-        .cw-verified {
-            width: 14px;
-            height: 14px;
-            background: #0ea5e9;
-            color: #ffffff;
-            border-radius: 50%;
-            font-size: 9px;
-            font-weight: 900;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .developer-subtext {
-            font-size: 10px;
-            color: #64748b;
-            font-weight: 700;
-            letter-spacing: 0.3px;
-        }
+.splash-loader-bar {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg,#9333ea,#6366f1,#c084fc);
+    animation: loadProgress 3s ease-in-out forwards;
+}
 
-        /* Iframe Container */
-        .iframe-container {
-            flex-grow: 1;
-            width: 100%;
-            background: #f8fafc;
-            position: relative;
-            overflow: hidden;
-        }
-        iframe {
-            width: 100%;
-            height: calc(100% + 75px);
-            margin-top: -75px;
-            border: none;
-            display: block;
-            background-color: #f8fafc;
-        }
-    </style>
+@keyframes loadProgress {
+    0% {width:0;}
+    70% {width:75%;}
+    100% {width:100%;}
+}
+
+/* MAIN APP */
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    background: #0b0611;
+}
+
+/* HEADER */
+
+.top-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    flex-shrink: 0;
+    background: #0b0611;
+    border-bottom: 1px solid #21132d;
+    transition: .3s ease;
+}
+
+.top-header.hidden-header {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    height: 0;
+    overflow: hidden;
+}
+
+.header-container {
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+}
+
+.cw-brand-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #160d20;
+    border: 1px solid #30203d;
+    padding: 5px 15px 5px 7px;
+    border-radius: 30px;
+}
+
+.cw-header-logo {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    object-fit: contain;
+}
+
+.brand-text-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.cw-title-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.cw-title {
+    font-size: 13px;
+    font-weight: 900;
+    color: white;
+}
+
+.cw-verified {
+    width: 14px;
+    height: 14px;
+    background: linear-gradient(135deg,#a855f7,#6366f1);
+    color: white;
+    border-radius: 50%;
+    font-size: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.developer-subtext {
+    font-size: 10px;
+    color: #bba4d5;
+    font-weight: 700;
+}
+
+/* IFRAME */
+
+.iframe-container {
+    flex-grow: 1;
+    width: 100%;
+    background: #0b0611;
+    position: relative;
+    overflow: hidden;
+}
+
+iframe {
+    width: 100%;
+    height: calc(100% + 75px);
+    margin-top: -75px;
+    border: none;
+    display: block;
+}
+
+/* MODEDUZONE PROFESSIONAL POPUP */
+
+.popup-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(4,2,9,.84);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+}
+
+.popup-overlay.show {
+    display: flex;
+}
+
+.popup-box {
+    width: 100%;
+    max-width: 370px;
+    position: relative;
+    border-radius: 25px;
+    padding: 25px 19px 21px;
+    background:
+        radial-gradient(circle at top right,rgba(147,51,234,.24),transparent 45%),
+        linear-gradient(145deg,#1b1026,#0d0814);
+    border: 1px solid rgba(168,85,247,.4);
+    box-shadow:
+        0 20px 70px rgba(0,0,0,.7),
+        0 0 30px rgba(147,51,234,.12);
+    animation: popupIn .4s cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes popupIn {
+    from {transform:scale(.88) translateY(22px);opacity:0;}
+    to {transform:scale(1) translateY(0);opacity:1;}
+}
+
+/* CLOSE BUTTON */
+
+.popup-close {
+    position: absolute;
+    top: 13px;
+    right: 13px;
+    width: 31px;
+    height: 31px;
+    border: 1px solid #44304f;
+    border-radius: 50%;
+    color: #e9d5ff;
+    background: #241631;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* POPUP LOGO */
+
+.popup-logo-wrapper {
+    width: 82px;
+    height: 82px;
+    margin: 0 auto 14px;
+    padding: 3px;
+    border-radius: 23px;
+    background: linear-gradient(135deg,#c084fc,#7c3aed,#4f46e5);
+    box-shadow: 0 8px 28px rgba(147,51,234,.3);
+}
+
+.popup-logo {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    border-radius: 20px;
+    background: #160d20;
+}
+
+/* POPUP TEXT */
+
+.popup-heading {
+    text-align: center;
+    font-size: 23px;
+    font-weight: 900;
+    color: white;
+    margin-bottom: 7px;
+    letter-spacing: -.5px;
+}
+
+.popup-heading span {
+    color: #c084fc;
+}
+
+.popup-tagline {
+    text-align: center;
+    font-size: 10px;
+    font-weight: 800;
+    color: #c4a5fd;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.popup-divider {
+    width: 48px;
+    height: 3px;
+    border-radius: 10px;
+    background: linear-gradient(90deg,#9333ea,#c084fc);
+    margin: 0 auto 15px;
+}
+
+.popup-description {
+    text-align: center;
+    color: #c4b5d0;
+    font-size: 12px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+/* CHANNEL CARDS */
+
+.popup-channel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    border-radius: 15px;
+    margin-bottom: 11px;
+    border: 1px solid #352442;
+    background: rgba(255,255,255,.035);
+    gap: 8px;
+    transition: background .2s ease;
+}
+
+.channel-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.channel-icon {
+    width: 43px;
+    height: 43px;
+    min-width: 43px;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.telegram-icon {
+    background: rgba(41,169,225,.13);
+}
+
+.whatsapp-icon {
+    background: rgba(37,211,102,.13);
+}
+
+.channel-icon svg {
+    width: 26px;
+    height: 26px;
+    display: block;
+}
+
+.channel-name {
+    color: white;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.channel-subtitle {
+    color: #a99ab6;
+    font-size: 9px;
+    margin-top: 4px;
+}
+
+.join-btn {
+    text-decoration: none;
+    color: white;
+    font-size: 10px;
+    font-weight: 900;
+    padding: 10px 13px;
+    border-radius: 9px;
+    white-space: nowrap;
+}
+
+.telegram-btn {
+    background: linear-gradient(135deg,#229ed9,#1878b9);
+}
+
+.whatsapp-btn {
+    background: linear-gradient(135deg,#20c76a,#128c4a);
+}
+
+.popup-footer {
+    text-align: center;
+    color: #a18caf;
+    font-size: 10px;
+    margin-top: 17px;
+    font-weight: 600;
+}
+
+@media(max-width:350px) {
+    .popup-box {padding:22px 13px 18px;}
+    .popup-heading {font-size:20px;}
+    .popup-description {font-size:11px;}
+}
+</style>
 </head>
+
 <body>
 
-    <!-- Splash Screen Component -->
-    <div class="splash-screen" id="splashScreen">
-        <div class="splash-content">
-            <div class="splash-logo-wrapper">
-                <img class="splash-logo" src="https://i.postimg.cc/fTfdSHbT/image-search-1783668281136.png" alt="Rojgar With Ankit Logo">
-            </div>
-            <div class="splash-title-group">
-                <h1 class="splash-title">ROJGAR WITH ANKIT</h1>
-                <span class="splash-verified">✓</span>
-            </div>
-            <p class="splash-subtext">Developer By MedxrohitBihar</p>
-            <div class="splash-loader-container">
-                <div class="splash-loader-bar"></div>
-            </div>
-        </div>
-    </div>
+<!-- SPLASH SCREEN -->
 
-    <!-- Main Application Structure -->
-    <div class="app-container">
-        <!-- Top Custom Header -->
-        <header class="top-header" id="mainHeader">
-            <div class="header-container">
-                <div class="header-left">
-                    <div class="cw-brand-badge">
-                        <img class="cw-header-logo" src="https://i.postimg.cc/fTfdSHbT/image-search-1783668281136.png" alt="Logo">
-                        <div class="brand-text-group">
-                            <div class="cw-title-row">
-                                <span class="cw-title">ROJGAR WITH ANKIT</span>
-                                <span class="cw-verified">✓</span>
-                            </div>
-                            <span class="developer-subtext">Developer By MedxrohitBihar</span>
-                        </div>
+<div class="splash-screen" id="splashScreen">
+
+    <div class="splash-content">
+
+        <img class="splash-logo"
+        src="https://i.postimg.cc/fTfdSHbT/image-search-1783668281136.png"
+        alt="Logo">
+
+        <div class="splash-title-group">
+            <h1 class="splash-title">ROJGAR WITH ANKIT</h1>
+            <span class="splash-verified">✓</span>
+        </div>
+
+        <p class="splash-subtext">
+            Developer By MedxrohitBihar
+        </p>
+
+        <div class="splash-loader-container">
+            <div class="splash-loader-bar"></div>
+        </div>
+
+    </div>
+</div>
+
+<!-- MAIN APPLICATION -->
+
+<div class="app-container">
+
+    <header class="top-header" id="mainHeader">
+
+        <div class="header-container">
+
+            <div class="cw-brand-badge">
+
+                <img class="cw-header-logo"
+                src="https://i.postimg.cc/fTfdSHbT/image-search-1783668281136.png"
+                alt="Logo">
+
+                <div class="brand-text-group">
+
+                    <div class="cw-title-row">
+                        <span class="cw-title">ROJGAR WITH ANKIT</span>
+                        <span class="cw-verified">✓</span>
                     </div>
+
+                    <span class="developer-subtext">
+                        Developer By MedxrohitBihar
+                    </span>
+
                 </div>
             </div>
-        </header>
 
-        <!-- Main Website Area -->
-        <div class="iframe-container">
-            <iframe id="appFrame" src="https://rojgarwithankitt.vercel.app" allowfullscreen></iframe>
         </div>
+    </header>
+
+    <div class="iframe-container">
+
+        <iframe
+            id="appFrame"
+            src="https://asmultiverse.website/rwax/"
+            allowfullscreen>
+        </iframe>
+
     </div>
 
-    <script>
-        // Splash Screen Hide Handler
-        window.addEventListener('load', function() {
-            const splashScreen = document.getElementById('splashScreen');
-            const iframe = document.getElementById('appFrame');
-            const header = document.getElementById('mainHeader');
+</div>
 
-            // Hide splash screen after loading animation finishes (2.6s total time for smooth experience)
-            setTimeout(function() {
-                splashScreen.classList.add('fade-out');
-            }, 2600);
+<!-- MODEDUZONE POPUP -->
 
-            // Header Auto Hide / Show logic on specific URLs inside iframe
-            try {
-                iframe.addEventListener('load', function() {
-                    setInterval(function() {
-                        try {
-                            const iframeWin = iframe.contentWindow;
-                            const currentUrl = iframeWin.location.href.toLowerCase();
-                            if (currentUrl.includes('play') || currentUrl.includes('video') || currentUrl.includes('watch') || currentUrl.includes('class') || currentUrl.includes('player')) {
-                                header.classList.add('hidden-header');
-                            } else {
-                                header.classList.remove('hidden-header');
-                            }
-                        } catch (e) {
-                            // Catch cross-origin security restrictions if navigated away
-                        }
-                    }, 500);
-                });
-            } catch (e) {}
-        });
-    </script>
+<div class="popup-overlay" id="welcomePopup">
+
+    <div class="popup-box">
+
+        <button class="popup-close"
+        type="button"
+        onclick="closePopup()"
+        aria-label="Close popup">×</button>
+
+        <!-- NEW MODEDUZONE LOGO -->
+
+        <div class="popup-logo-wrapper">
+
+            <img class="popup-logo"
+            src="https://i.postimg.cc/3NCJV68W/luffy-logo.png"
+            alt="ModEduZone Logo">
+
+        </div>
+
+        <h2 class="popup-heading">
+            Welcome to <span>ModEduZone</span>
+        </h2>
+
+        <p class="popup-tagline">
+            YOUR LEARNING COMMUNITY
+        </p>
+
+        <div class="popup-divider"></div>
+
+        <p class="popup-description">
+            Stay connected with ModEduZone!
+            Join our official channels to receive
+            the latest updates, study materials
+            and important announcements.
+        </p>
+
+        <!-- TELEGRAM CHANNEL -->
+
+        <div class="popup-channel">
+
+            <div class="channel-info">
+
+                <div class="channel-icon telegram-icon">
+
+                    <svg viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+
+                        <path fill="#29A9E0"
+                        d="M22 2L2 9.8c-1.3.5-1.3 1.3-.2 1.7l5.1 1.6
+                        2 6.2c.2.6.1.8.7.8.5 0 .8-.2 1.1-.5l2.5-2.4
+                        5.2 3.8c1 .5 1.7.2 1.9-.9L23 3.5C23.3 2.1
+                        22.5 1.5 22 2ZM8 12.7l11.3-7.1c.6-.4 1.1-.2.7.2
+                        l-9.4 8.5-.4 4.1-2.2-5.7Z"/>
+
+                    </svg>
+
+                </div>
+
+                <div>
+                    <div class="channel-name">Telegram Channel</div>
+                    <div class="channel-subtitle">
+                        Latest updates & announcements
+                    </div>
+                </div>
+
+            </div>
+
+            <a class="join-btn telegram-btn"
+            href="https://t.me/+Iy11394-unM4ZTEx"
+            target="_blank"
+            rel="noopener noreferrer">
+                JOIN →
+            </a>
+
+        </div>
+
+        <!-- WHATSAPP CHANNEL -->
+
+        <div class="popup-channel">
+
+            <div class="channel-info">
+
+                <div class="channel-icon whatsapp-icon">
+
+                    <svg viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+
+                        <path fill="#25D366"
+                        d="M12.04 2C6.53 2 2.04 6.48
+                        2.04 12c0 1.76.46 3.48
+                        1.34 5L2 22l5.15-1.35
+                        c1.49.81 3.17 1.24 4.88 1.24
+                        h.01c5.52 0 10.01-4.49
+                        10.01-10.01 0-2.67-1.04-5.18
+                        -2.93-7.07A9.94 9.94 0 0 0 12.04 2Z"/>
+
+                        <path fill="#ffffff"
+                        d="M17.85 14.4c-.32-.16-1.89-.93
+                        -2.18-1.04-.29-.1-.5-.16-.71.16
+                        -.21.32-.82 1.04-1 1.25
+                        -.18.21-.37.24-.69.08
+                        -.32-.16-1.35-.5-2.57-1.59
+                        -.95-.85-1.59-1.9-1.78-2.22
+                        -.19-.32-.02-.5.14-.66
+                        .14-.14.32-.37.48-.55
+                        .16-.19.21-.32.32-.53
+                        .11-.21.05-.4-.03-.56
+                        -.08-.16-.71-1.72-.98-2.36
+                        -.26-.62-.52-.53-.71-.54
+                        h-.61c-.21 0-.56.08-.85.4
+                        -.29.32-1.12 1.09-1.12 2.65
+                        0 1.56 1.14 3.07 1.3 3.28
+                        .16.21 2.24 3.42 5.43 4.8
+                        .76.33 1.35.52 1.81.67
+                        .76.24 1.45.21 2 .13
+                        .61-.09 1.89-.77 2.15-1.52
+                        .27-.74.27-1.38.19-1.52
+                        -.08-.13-.29-.21-.61-.37Z"/>
+
+                    </svg>
+
+                </div>
+
+                <div>
+                    <div class="channel-name">WhatsApp Channel</div>
+                    <div class="channel-subtitle">
+                        Stay connected with us
+                    </div>
+                </div>
+
+            </div>
+
+            <a class="join-btn whatsapp-btn"
+            href="https://whatsapp.com/channel/0029Vb6FhReEquiLz1jNH00o"
+            target="_blank"
+            rel="noopener noreferrer">
+                JOIN →
+            </a>
+
+        </div>
+
+        <div class="popup-footer">
+            Thank you for being part of our community ❤️
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+/* SPLASH SCREEN + POPUP ON EVERY APP OPEN */
+
+const splash = document.getElementById('splashScreen');
+const popup = document.getElementById('welcomePopup');
+
+let popupOpen = false;
+
+function showPopup() {
+
+    popup.style.display = 'flex';
+
+    requestAnimationFrame(function() {
+        popup.classList.add('show');
+    });
+
+    popupOpen = true;
+
+    // Add a history entry to help keep Android Back
+    // from closing the popup.
+    history.pushState(
+        {modEduZonePopup: true},
+        '',
+        location.href
+    );
+}
+
+function closePopup() {
+
+    if (!popupOpen) return;
+
+    popup.classList.remove('show');
+    popupOpen = false;
+
+    setTimeout(function() {
+        popup.style.display = 'none';
+    }, 350);
+
+    // Remove the popup history entry.
+    history.back();
+}
+
+window.addEventListener('load', function() {
+
+    setTimeout(function() {
+
+        splash.classList.add('fade-out');
+
+        // Show on every fresh app/page launch.
+        setTimeout(showPopup, 400);
+
+    }, 3000);
+
+});
+
+/* PREVENT OUTSIDE CLICK FROM CLOSING POPUP */
+
+// No overlay click-to-close handler is added.
+// Only the X button closes the popup.
+
+popup.addEventListener('click', function(event) {
+    if (event.target === popup) {
+        event.stopPropagation();
+    }
+});
+
+/* ANDROID / BROWSER BACK BUTTON */
+
+window.addEventListener('popstate', function() {
+
+    if (popupOpen) {
+
+        // Keep the popup open when Back is pressed.
+        history.pushState(
+            {modEduZonePopup: true},
+            '',
+            location.href
+        );
+
+    }
+
+});
+
+/* HEADER AUTO HIDE / SHOW */
+
+const iframe = document.getElementById('appFrame');
+const header = document.getElementById('mainHeader');
+
+iframe.addEventListener('load', function() {
+
+    function checkHeader() {
+
+        try {
+
+            const currentUrl =
+            iframe.contentWindow.location.href.toLowerCase();
+
+            if (
+                currentUrl.includes('play') ||
+                currentUrl.includes('video') ||
+                currentUrl.includes('watch') ||
+                currentUrl.includes('class') ||
+                currentUrl.includes('player')
+            ) {
+
+                header.classList.add('hidden-header');
+
+            } else {
+
+                header.classList.remove('hidden-header');
+
+            }
+
+        } catch(e) {
+            // Cross-origin restriction
+        }
+
+    }
+
+    checkHeader();
+
+    setInterval(checkHeader, 1000);
+
+});
+
+</script>
 
 </body>
 </html>
